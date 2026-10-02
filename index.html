@@ -1,87 +1,102 @@
 <!DOCTYPE HTML>
 <html lang="ru">
 <head>
-    <!-- Шаг 1: Кодировка UTF-8 и мета-тег viewport для адаптивности (100% масштаб) -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Информационная карточка / Резюме</title>
+    <title>Лабораторная работа №5 — Flexbox & CSS Grid</title>
     <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
 
-    <!-- Шаг 2: Семантическое зонирование <header> -->
-    <header>
-        <!-- Шаг 3: Тег <img> с обязательным атрибутом alt для доступности -->
-        <img src="https://via.placeholder.com/150" alt="Фотография профиля Закира" width="150" height="150">
-        <h1>Закир</h1>
-        <p>Веб-разработчик / Специалист по информационной безопасности</p>
+    <!-- Шаг 1: Макроконтейнер с display: grid -->
+    <div class="dashboard-container">
         
-        <nav>
-            <ul>
-                <li><a href="#about">О себе</a></li>
-                <li><a href="#skills">Навыки</a></li>
-                <li><a href="#contact">Контакты</a></li>
-            </ul>
-        </nav>
-    </header>
+        <!-- Верхняя панель -->
+        <header class="header-panel">
+            <div class="logo">Dashboard SOC</div>
+            <nav class="user-profile">
+                <span>Пользователь: Закир</span>
+                <button type="button">Выйти</button>
+            </nav>
+        </header>
 
-    <!-- Шаг 2: Семантический тег <main> -->
-    <main>
-        <!-- Секция "О себе" с использованием <section> и <article> -->
-        <section id="about">
-            <h2>О себе</h2>
-            <article>
-                <h3>Краткая биография</h3>
-                <p>Студент факультета информационных технологий. Увлекаюсь веб-разработкой, сетевой безопасностью и проектированием реляционных баз данных.</p>
-            </article>
-        </section>
-
-        <!-- Секция "Навыки" -->
-        <section id="skills">
-            <h2>Ключевые навыки</h2>
-            <article>
+        <!-- Боковое меню -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
                 <ul>
-                    <li>HTML5, CSS3, JavaScript</li>
-                    <li>Python, Flask, SQL</li>
-                    <li>Git, GitHub, VS Code</li>
+                    <li><a href="#" class="active">Главная</a></li>
+                    <li><a href="#">Аналитика</a></li>
+                    <li><a href="#">Логи</a></li>
+                    <li><a href="#">Настройки</a></li>
                 </ul>
-            </article>
-        </section>
+            </nav>
+        </aside>
 
-        <!-- Шаг 4: Интерактивная форма с тегами <input type="email">, <input type="tel"> и явной связью <label for="..."> -->
-        <section id="contact">
-            <h2>Связаться со мной</h2>
-            <form action="#" method="post">
-                <div>
-                    <label for="user-name">Имя:</label>
-                    <input type="text" id="user-name" name="name" required>
-                </div>
+        <!-- Центральная контентная область -->
+        <main class="main-content">
+            <h2>Каталог событий / Мониторинг</h2>
+            
+            <!-- Шаг 2: Сетка с auto-fit, minmax и gap -->
+            <div class="cards-grid">
                 
-                <div>
-                    <label for="user-email">Электронная почта:</label>
-                    <input type="email" id="user-email" name="email" required placeholder="your.email@kaznu.kz">
-                </div>
+                <!-- Шаг 3 & 4: Карточки с display: flex, justify-content, align-items -->
+                <article class="card">
+                    <div class="card-header">
+                        <h3>Анализ трафика</h3>
+                        <span class="badge status-ok">OK</span>
+                    </div>
+                    <p class="card-body">Мониторинг сетевых пакетов в реальном времени.</p>
+                    <div class="card-footer">
+                        <span>Статус: Активен</span>
+                        <button type="button">Детали</button>
+                    </div>
+                </article>
 
-                <div>
-                    <label for="user-phone">Номер телефона:</label>
-                    <input type="tel" id="user-phone" name="phone" required placeholder="+7 (700) 000-00-00">
-                </div>
+                <article class="card">
+                    <div class="card-header">
+                        <h3>Системные логи</h3>
+                        <span class="badge status-warn">WARN</span>
+                    </div>
+                    <p class="card-body">Сбор событий с локальных и удаленных узлов.</p>
+                    <div class="card-footer">
+                        <span>Записи: 1,240</span>
+                        <button type="button">Детали</button>
+                    </div>
+                </article>
 
-                <div>
-                    <label for="user-message">Сообщение:</label>
-                    <textarea id="user-message" name="message" rows="4"></textarea>
-                </div>
+                <article class="card">
+                    <div class="card-header">
+                        <h3>Инциденты ИБ</h3>
+                        <span class="badge status-danger">ALERT</span>
+                    </div>
+                    <p class="card-body">Обнаружение подозрительной активности в сети.</p>
+                    <div class="card-footer">
+                        <span>Критичность: Высокая</span>
+                        <button type="button">Детали</button>
+                    </div>
+                </article>
 
-                <button type="submit">Отправить</button>
-            </form>
-        </section>
-    </main>
+                <article class="card">
+                    <div class="card-header">
+                        <h3>База данных</h3>
+                        <span class="badge status-ok">OK</span>
+                    </div>
+                    <p class="card-body">Проверка целостности и оптимизация запросов.</p>
+                    <div class="card-footer">
+                        <span>Нагрузка: 12%</span>
+                        <button type="button">Детали</button>
+                    </div>
+                </article>
 
-    <!-- Шаг 2: Семантический футер <footer> -->
-    <footer>
-        <p>&copy; 2026 Закир. Все права защищены.</p>
-    </footer>
+            </div>
+        </main>
 
-    <script src="js/app.js"></script>
+        <!-- Футер макета -->
+        <footer class="footer-panel">
+            <p>&copy; 2026 Закир. Лабораторная работа №5.</p>
+        </footer>
+
+    </div>
+
 </body>
 </html>
