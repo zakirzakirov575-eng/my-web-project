@@ -1,0 +1,14 @@
+# Внешние модули Node.js
+node_modules/
+
+# Логи
+*.log
+npm-debug.log*
+
+# Настройки VS Code / IDE
+.vscode/
+.idea/
+
+# Системные файлы
+.DS_Store
+Thumbs.db
