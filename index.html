@@ -3,55 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard SOC — Мониторинг</title>
+    <title>Закир — Portfolio & Security Operations Dashboard</title>
     <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
 
-    <div class="dashboard-container">
-        <!-- Шапка -->
-        <header class="header-panel">
-            <div class="logo">🛡️ SOC Monitoring Hub</div>
-            <nav class="user-profile">
-                <span>Пользователь: <strong>Закир</strong></span>
-                <button type="button" id="logout-btn">Выйти</button>
-            </nav>
+    <!-- Макроконтейнер (Лаба 5: CSS Grid) -->
+    <div class="app-container">
+        
+        <!-- Шапка (Лаба 2: Header & Img) -->
+        <header class="app-header">
+            <div class="brand">
+                <img src="https://via.placeholder.com/100" alt="Аватар профиля Закира" class="avatar">
+                <div>
+                    <h1>Закир</h1>
+                    <p class="subtitle">SOC Analyst / Web Developer</p>
+                </div>
+            </div>
+            <div class="header-status">
+                <span class="status-indicator"></span> System Operational
+            </div>
         </header>
 
-        <!-- Навигация -->
-        <aside class="sidebar">
+        <!-- Навигация (Лаба 2: Nav) -->
+        <aside class="app-sidebar">
             <nav class="sidebar-nav">
                 <ul>
-                    <li><a href="#" data-page="main" class="active">Главная</a></li>
-                    <li><a href="#" data-page="analytics">Аналитика</a></li>
-                    <li><a href="#" data-page="logs">Логи</a></li>
-                    <li><a href="#" data-page="settings">Настройки</a></li>
+                    <li><a href="#" data-tab="dashboard" class="nav-link active">📊 Дашборд</a></li>
+                    <li><a href="#" data-tab="profile" class="nav-link">👤 Резюме / О себе</a></li>
+                    <li><a href="#" data-tab="contact" class="nav-link">📝 Форма связи</a></li>
                 </ul>
             </nav>
         </aside>
 
-        <!-- Контент -->
-        <main class="main-content">
-            <h2 id="page-title">Каталог событий / Мониторинг</h2>
+        <!-- Основная область (Лаба 2: Main, Section, Article) -->
+        <main class="app-main">
             
-            <div class="cards-grid" id="cards-container">
-                <!-- Карточки будут динамически меняться и управляться через JS -->
-            </div>
+            <!-- Вкладка 1: Дашборд (Лаба 5: Flex/Grid Cards) -->
+            <section id="dashboard" class="tab-content active">
+                <div class="section-header">
+                    <h2>Центр мониторинга и сервисов</h2>
+                    <p>Адаптивная сетка карточек состояния системы</p>
+                </div>
+
+                <div class="cards-grid">
+                    <article class="card">
+                        <div class="card-header">
+                            <h3>Wazuh SIEM</h3>
+                            <span class="badge badge-success">Active</span>
+                        </div>
+                        <p class="card-body">Сбор и корреляция событий безопасности в режиме реального времени.</p>
+                        <div class="card-footer">
+                            <span>Загрузка: 18%</span>
+                            <button type="button" class="btn btn-primary" onclick="showDetails('Wazuh SIEM', 'Все агенты подключены. Сбоев не зафиксировано.')">Детали</button>
+                        </div>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-header">
+                            <h3>Network Traffic</h3>
+                            <span class="badge badge-success">Normal</span>
+                        </div>
+                        <p class="card-body">Анализ сетевых пакетов, фильтрация аномалий и мониторинг портов.</p>
+                        <div class="card-footer">
+                            <span>Скорость: 1.2 Gbps</span>
+                            <button type="button" class="btn btn-primary" onclick="showDetails('Network Traffic', 'Пропускаемость в норме, подозрительный трафик отсутствует.')">Детали</button>
+                        </div>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-header">
+                            <h3>Database Audit</h3>
+                            <span class="badge badge-warning">Warning</span>
+                        </div>
+                        <p class="card-body">Отслеживание T-SQL запросов, триггеров и прав доступа к БД.</p>
+                        <div class="card-footer">
+                            <span>Запросы: 420/сек</span>
+                            <button type="button" class="btn btn-primary" onclick="showDetails('Database Audit', 'Зафиксировано повышенное количество медленных запросов.')">Детали</button>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Вкладка 2: Резюме -->
+            <section id="profile" class="tab-content">
+                <div class="section-header">
+                    <h2>Информация о разработчике</h2>
+                </div>
+                <article class="profile-card">
+                    <h3>Краткая сводка</h3>
+                    <p>Студент факультета информационных технологий (КазНУ). Специализируюсь на сетевой безопасности, SIEM-системах и современной веб-разработке.</p>
+                    <hr>
+                    <h4>Ключевые навыки:</h4>
+                    <ul class="skills-list">
+                        <li>HTML5 / CSS3 (Grid & Flexbox) / JavaScript</li>
+                        <li>Python / Flask / SQLAlchemy</li>
+                        <li>Network Security / Wazuh SIEM / Git</li>
+                    </ul>
+                </article>
+            </section>
+
+            <!-- Вкладка 3: Форма (Лаба 3: Валидация, Fieldset, Radio, Checkbox, Select) -->
+            <section id="contact" class="tab-content">
+                <div class="section-header">
+                    <h2>Форма обратной связи и регистрации</h2>
+                </div>
+
+                <form class="custom-form" onsubmit="event.preventDefault(); alert('Форма успешно отправлена!');">
+                    <fieldset>
+                        <legend>Личные данные</legend>
+                        <div class="form-group">
+                            <label for="username">Имя пользователя:</label>
+                            <input type="text" id="username" required minlength="3" maxlength="20" placeholder="Введите имя">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Академическая почта:</label>
+                            <input type="email" id="email" required pattern=".+@kaznu\.kz" placeholder="user@kaznu.kz">
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Параметры и предпочтения</legend>
+                        <div class="form-group">
+                            <label for="role">Роль в системе:</label>
+                            <select id="role" required>
+                                <option value="">-- Выберите роль --</option>
+                                <option value="analyst">SOC Analyst</option>
+                                <option value="developer">Web Developer</option>
+                                <option value="student">Студент</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Уведомления:</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="notify" value="email" checked> Email</label>
+                                <label><input type="radio" name="notify" value="telegram"> Telegram</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label><input type="checkbox" required> Я согласен на обработку данных</label>
+                        </div>
+                    </fieldset>
+
+                    <button type="submit" class="btn btn-submit">Отправить форму</button>
+                </form>
+            </section>
+
         </main>
 
-        <!-- Футер -->
-        <footer class="footer-panel">
-            <p>&copy; 2026 Закир. Лабораторная работа №5.</p>
+        <!-- Футер (Лаба 2: Footer) -->
+        <footer class="app-footer">
+            <p>&copy; 2026 Закир. Разработано в рамках лабораторных работ №1–5.</p>
         </footer>
+
     </div>
 
-    <!-- Модальное окно для деталей -->
-    <div class="modal" id="details-modal">
-        <div class="modal-content">
-            <span class="close-btn" id="modal-close">&times;</span>
-            <h3 id="modal-title">Детализация</h3>
-            <hr><br>
-            <div id="modal-body"></div>
+    <!-- Модальное окно (Лаба 5 / JS) -->
+    <div id="modal" class="modal">
+        <div class="modal-card">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h3 id="modal-title">Детали</h3>
+            <p id="modal-desc"></p>
         </div>
     </div>
 
