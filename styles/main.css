@@ -1,172 +1,41 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-
-:root {
-  --primary-color: #2563eb;
-  --bg-color: #f1f5f9;
-  --card-bg: #ffffff;
-  --text-color: #0f172a;
-  --border-color: #cbd5e1;
-  --base-gap: 1.25rem;
-}
-
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  min-height: 100vh;
-}
-
-/* ==========================================================================
-   Шаг 1: Двумерный Grid-макет всей страницы (header, sidebar, main, footer)
-   ========================================================================== */
-.dashboard-container {
-  display: grid;
-  grid-template-columns: 220px 1fr;
-  grid-template-rows: auto 1fr auto;
-  grid-template-areas:
-    "header header"
-    "sidebar main"
-    "footer footer";
-  min-height: 100vh;
-}
-
-/* Распределение по зонам */
-.header-panel { grid-area: header; }
-.sidebar { grid-area: sidebar; }
-.main-content { grid-area: main; }
-.footer-panel { grid-area: footer; }
-
-/* ==========================================================================
-   Шаг 3 & 4: Шляпа (Header) на Flexbox
-   ========================================================================== */
-.header-panel {
-  display: flex;
-  justify-content: space-between;
+/* Стили для модального окна деталей */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  justify-content: center;
   align-items: center;
-  background-color: #1e293b;
-  color: #fff;
-  padding: 1rem 1.5rem;
 }
 
-.user-profile {
+.modal.active {
   display: flex;
-  align-items: center;
-  gap: 1rem;
 }
 
-.user-profile button {
-  padding: 0.4rem 0.8rem;
-  background-color: #ef4444;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-/* Боковое меню (Sidebar) */
-.sidebar {
-  background-color: #334155;
-  padding: 1.5rem 1rem;
-}
-
-.sidebar-nav ul {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.sidebar-nav a {
-  color: #94a3b8;
-  text-decoration: none;
-  padding: 0.6rem 1rem;
-  display: block;
-  border-radius: 4px;
-}
-
-.sidebar-nav a.active,
-.sidebar-nav a:hover {
-  background-color: var(--primary-color);
-  color: white;
-}
-
-/* Центральная область */
-.main-content {
-  padding: 1.5rem;
-}
-
-.main-content h2 {
-  margin-bottom: 1.25rem;
-}
-
-/* ==========================================================================
-   Шаг 2: Адаптивная сетка карточек через Grid (repeat, auto-fit, minmax, gap)
-   ========================================================================== */
-.cards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: var(--base-gap);
-}
-
-/* ==========================================================================
-   Шаг 3 & 4: Верстка элементов карточки на Flexbox
-   ========================================================================== */
-.card {
+.modal-content {
   background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
+  padding: 1.5rem;
   border-radius: 8px;
-  padding: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 1rem;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  position: relative;
 }
 
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.badge {
-  font-size: 0.75rem;
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
+.close-btn {
+  position: absolute;
+  right: 1rem;
+  top: 0.75rem;
+  font-size: 1.5rem;
   font-weight: bold;
-}
-
-.status-ok { background-color: #dcfce7; color: #166534; }
-.status-warn { background-color: #fef9c3; color: #854d0e; }
-.status-danger { background-color: #fee2e2; color: #991b1b; }
-
-.card-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid var(--border-color);
-  padding-top: 0.75rem;
-  font-size: 0.875rem;
-}
-
-.card-footer button {
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  padding: 0.35rem 0.75rem;
-  border-radius: 4px;
   cursor: pointer;
+  color: #64748b;
 }
 
-/* Футер */
-.footer-panel {
-  background-color: #1e293b;
-  color: #94a3b8;
-  text-align: center;
-  padding: 1rem;
+.close-btn:hover {
+  color: #0f172a;
 }
