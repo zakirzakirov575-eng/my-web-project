@@ -398,3 +398,12 @@ input.input-error {
   display: block;
   font-weight: 500;
 }
+/* По умолчанию скрываем все вкладки */
+.tab-content {
+  display: none !important;
+}
+
+/* Показываем ТОЛЬКО активную вкладку */
+.tab-content.active {
+  display: block !important;
+}

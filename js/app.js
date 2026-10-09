@@ -1,28 +1,43 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // ==========================================================================
-    // 1. Навигация и переключение вкладок
+    // 1. Мобильное меню (Гамбургер)
     // ==========================================================================
     const menuToggle = document.getElementById('menu-toggle');
     const sidebar = document.getElementById('app-sidebar');
 
     if (menuToggle && sidebar) {
-        menuToggle.addEventListener('click', () => sidebar.classList.toggle('active'));
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
     }
 
+    // ==========================================================================
+    // 2. Блок переключения страниц / вкладок
+    // ==========================================================================
     const navLinks = document.querySelectorAll('.nav-link');
     const tabContents = document.querySelectorAll('.tab-content');
 
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
+
+            // Скрываем все страницы и снимаем класс active у всех ссылок
             navLinks.forEach(item => item.classList.remove('active'));
             tabContents.forEach(tab => tab.classList.remove('active'));
 
+            // Подсвечиваем нажатую ссылку
             link.classList.add('active');
-            const targetTab = link.getAttribute('data-tab');
-            document.getElementById(targetTab).classList.add('active');
 
+            // Показываем ТОЛЬКО ту страницу, на которую кликнули
+            const targetTabId = link.getAttribute('data-tab');
+            const targetTab = document.getElementById(targetTabId);
+
+            if (targetTab) {
+                targetTab.classList.add('active');
+            }
+
+            // Автоматически закрываем меню на мобилках после клика
             if (window.innerWidth < 768 && sidebar) {
                 sidebar.classList.remove('active');
             }
@@ -30,55 +45,45 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==========================================================================
-    // 2. Лабораторная работа №8: Кастомная валидация форм через RegExp
+    // 3. Лабораторная №8: Кастомный Валидатор Формы (RegExp)
     // ==========================================================================
     const valForm = document.querySelector('#custom-val-form');
     const emailInput = document.querySelector('#val-email');
     const passwordInput = document.querySelector('#val-password');
     const phoneInput = document.querySelector('#val-phone');
 
-    // Шаг 2: Строгие маски регулярных выражений (RegExp)
+    // Маски регулярных выражений
     const patterns = {
-        // Проверка e-mail, наличия @ и домена второго уровня
         email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-        
-        // Мин. 8 символов, заглавная буква, цифра, спецсимвол
         password: /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/,
-        
-        // Международный формат телефона (+7..., +380..., и т.д.)
         phone: /^\+?[1-9]\d{1,14}$/
     };
 
-    // Сообщения об ошибках
     const errorMessages = {
         email: "Введите корректный E-mail (например, user@domain.com)",
         password: "Пароль должен содержать мин. 8 символов, 1 заглавную букву, 1 цифру и 1 спецсимвол",
         phone: "Введите телефон в международном формате (например, +77071234567)"
     };
 
-    // Шаг 3: Алгоритм очистки прошлых ошибок из DOM
+    // Очистка старых ошибок из DOM
     function clearErrors() {
         document.querySelectorAll('.error-message').forEach(el => el.remove());
         document.querySelectorAll('.input-error').forEach(input => input.classList.remove('input-error'));
     }
 
-    // Шаг 5: Точечная вставка ошибки под инпутом
+    // Вывод текста ошибки под инпутом
     function showError(inputElement, message) {
         inputElement.classList.add('input-error');
-        
         const errorNode = document.createElement('span');
         errorNode.className = 'error-message';
         errorNode.textContent = message;
-
-        // Вставка под поля ввода
         inputElement.parentNode.appendChild(errorNode);
     }
 
-    // Шаг 1 & 4: Перехват submit и условная логика regex.test()
     if (valForm) {
         valForm.addEventListener('submit', (event) => {
             event.preventDefault(); // Блокировка перезагрузки
-            clearErrors(); // Очистка старых ошибок
+            clearErrors(); // Очистка ошибок
 
             let isValid = true;
 
@@ -94,14 +99,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 isValid = false;
             }
 
-            // Проверка Телефона (очищаем от пробелов для теста)
+            // Проверка Телефона
             const cleanPhone = phoneInput.value.replace(/\s+/g, '');
             if (!patterns.phone.test(cleanPhone)) {
                 showError(phoneInput, errorMessages.phone);
                 isValid = false;
             }
 
-            // Успешная валидация
             if (isValid) {
                 alert('Форма успешно прошла валидацию по RegExp! Данные отправлены.');
                 valForm.reset();
@@ -110,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================================================
-    // 3. Лабораторная работа №7: To-Do
+    // 4. Лабораторная №7: To-Do Менеджер
     // ==========================================================================
     const todoForm = document.querySelector('#todo-form');
     const todoInput = document.querySelector('#todo-input');
@@ -157,6 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Делегирование событий на контейнере <ul>
     if (todoList) {
         todoList.addEventListener('click', (e) => {
             const actionButton = e.target.closest('button[data-action]');
@@ -172,7 +177,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-// Модальное окно
+// ==========================================================================
+// 5. Модальное окно деталей карточек
+// ==========================================================================
 function showDetails(title, description) {
     document.getElementById('modal-title').textContent = title;
     document.getElementById('modal-desc').textContent = description;

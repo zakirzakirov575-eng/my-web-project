@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard SOC & Form Validator — Лабораторная №8</title>
+    <title>Dashboard SOC & Web Labs — Закир</title>
     <link rel="stylesheet" href="styles/main.css">
     <script src="js/app.js" defer></script>
 </head>
@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="header-status">
-                <span class="status-indicator"></span> Operational
+                <span class="status-indicator"></span> System Operational
             </div>
         </header>
 
@@ -31,17 +31,17 @@
             <nav class="sidebar-nav">
                 <ul>
                     <li><a href="#" data-tab="contact" class="nav-link active">📝 Валидация формы (Лаба 8)</a></li>
-                    <li><a href="#" data-tab="todo" class="nav-link">✅ Задачи (To-Do)</a></li>
-                    <li><a href="#" data-tab="dashboard" class="nav-link">📊 Дашборд</a></li>
-                    <li><a href="#" data-tab="profile" class="nav-link">👤 Резюме</a></li>
+                    <li><a href="#" data-tab="todo" class="nav-link">✅ Задачи To-Do (Лаба 7)</a></li>
+                    <li><a href="#" data-tab="dashboard" class="nav-link">📊 Дашборд SOC (Лаба 5-6)</a></li>
+                    <li><a href="#" data-tab="profile" class="nav-link">👤 Резюме / О себе</a></li>
                 </ul>
             </nav>
         </aside>
 
-        <!-- Основной контент -->
+        <!-- Основной контент (Каждая секция — отдельная страница) -->
         <main class="app-main">
             
-            <!-- Шаг 1: Форма регистрации / валидации (Лаба 8) -->
+            <!-- Страница 1: Валидация формы (Лаба 8) -->
             <section id="contact" class="tab-content active">
                 <div class="section-header">
                     <h2>Кастомный валидатор формы (RegExp)</h2>
@@ -52,22 +52,19 @@
                     <fieldset>
                         <legend>Учетные данные</legend>
                         
-                        <!-- Email -->
                         <div class="form-group">
                             <label for="val-email">Email адрес:</label>
                             <input type="email" id="val-email" placeholder="example@domain.com">
                         </div>
 
-                        <!-- Пароль -->
                         <div class="form-group">
                             <label for="val-password">Пароль:</label>
                             <input type="password" id="val-password" placeholder="Заглавная, цифра, спецсимвол, мин. 8 знаков">
                         </div>
 
-                        <!-- Телефон -->
                         <div class="form-group">
                             <label for="val-phone">Номер телефона (международный):</label>
-                            <input type="tel" id="val-phone" placeholder="+7 707 123 4567 или +77071234567">
+                            <input type="tel" id="val-phone" placeholder="+77071234567">
                         </div>
                     </fieldset>
 
@@ -75,10 +72,11 @@
                 </form>
             </section>
 
-            <!-- Раздел To-Do (Лаба 7) -->
+            <!-- Страница 2: To-Do (Лаба 7) -->
             <section id="todo" class="tab-content">
                 <div class="section-header">
                     <h2>Интерактивный To-Do Менеджер</h2>
+                    <p>Управление задачами без сторонних фреймворков</p>
                 </div>
                 <div class="todo-card">
                     <form id="todo-form" class="todo-form">
@@ -91,10 +89,11 @@
                 </div>
             </section>
 
-            <!-- Раздел Дашборд -->
+            <!-- Страница 3: Дашборд (Лаба 5-6) -->
             <section id="dashboard" class="tab-content">
                 <div class="section-header">
                     <h2>Центр мониторинга и сервисов</h2>
+                    <p>Сетка карточек состояния системы</p>
                 </div>
                 <div class="cards-grid">
                     <article class="card">
@@ -102,29 +101,61 @@
                             <h3>Wazuh SIEM</h3>
                             <span class="badge badge-success">Active</span>
                         </div>
-                        <p class="card-body">Сбор и корреляция событий безопасности.</p>
+                        <p class="card-body">Сбор и корреляция событий безопасности в режиме реального времени.</p>
                         <div class="card-footer">
                             <span>Загрузка: 18%</span>
-                            <button type="button" class="btn btn-primary" onclick="showDetails('Wazuh SIEM', 'Все агенты подключены.')">Детали</button>
+                            <button type="button" class="btn btn-primary" onclick="showDetails('Wazuh SIEM', 'Все агенты подключены. Сбоев не зафиксировано.')">Детали</button>
+                        </div>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-header">
+                            <h3>Network Traffic</h3>
+                            <span class="badge badge-success">Normal</span>
+                        </div>
+                        <p class="card-body">Анализ сетевых пакетов, фильтрация аномалий и мониторинг портов.</p>
+                        <div class="card-footer">
+                            <span>Скорость: 1.2 Gbps</span>
+                            <button type="button" class="btn btn-primary" onclick="showDetails('Network Traffic', 'Пропускаемость в норме.')">Детали</button>
+                        </div>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-header">
+                            <h3>Database Audit</h3>
+                            <span class="badge badge-warning">Warning</span>
+                        </div>
+                        <p class="card-body">Отслеживание T-SQL запросов и прав доступа к БД.</p>
+                        <div class="card-footer">
+                            <span>Запросы: 420/сек</span>
+                            <button type="button" class="btn btn-primary" onclick="showDetails('Database Audit', 'Зафиксировано повышенное количество медленных запросов.')">Детали</button>
                         </div>
                     </article>
                 </div>
             </section>
 
-            <!-- Раздел Резюме -->
+            <!-- Страница 4: Резюме -->
             <section id="profile" class="tab-content">
                 <div class="section-header">
                     <h2>Информация о разработчике</h2>
                 </div>
                 <article class="profile-card">
-                    <p>Студент КазНУ. Специализируюсь на сетевой безопасности и веб-разработке.</p>
+                    <h3>Краткая сводка</h3>
+                    <p>Студент факультета информационных технологий (КазНУ). Специализируюсь на сетевой безопасности, SIEM-системах и веб-разработке.</p>
+                    <hr style="margin: 1rem 0; border-color: var(--border-color);">
+                    <h4>Ключевые навыки:</h4>
+                    <ul style="margin-left: 1.2rem; margin-top: 0.5rem; color: var(--text-muted);">
+                        <li>HTML5 / CSS3 (Grid & Flexbox) / JavaScript</li>
+                        <li>Python / Flask / SQLAlchemy / SQL Server</li>
+                        <li>Network Security / Wazuh SIEM / Git</li>
+                    </ul>
                 </article>
             </section>
 
         </main>
 
         <footer class="app-footer">
-            <p>&copy; 2026 Закир. Лабораторная работа №8.</p>
+            <p>&copy; 2026 Закир. Лабораторные работы №1–8.</p>
         </footer>
 
     </div>
