@@ -1,15 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // ==========================================================================
-    // Навигация и Мобильное меню
+    // 1. Навигация и переключение вкладок
     // ==========================================================================
     const menuToggle = document.getElementById('menu-toggle');
     const sidebar = document.getElementById('app-sidebar');
 
     if (menuToggle && sidebar) {
-        menuToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-        });
+        menuToggle.addEventListener('click', () => sidebar.classList.toggle('active'));
     }
 
     const navLinks = document.querySelectorAll('.nav-link');
@@ -18,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
-
             navLinks.forEach(item => item.classList.remove('active'));
             tabContents.forEach(tab => tab.classList.remove('active'));
 
@@ -26,41 +23,107 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetTab = link.getAttribute('data-tab');
             document.getElementById(targetTab).classList.add('active');
 
-            if (window.innerWidth < 768) {
+            if (window.innerWidth < 768 && sidebar) {
                 sidebar.classList.remove('active');
             }
         });
     });
 
     // ==========================================================================
-    // Лабораторная работа №7: Интерактивное To-Do Приложение
+    // 2. Лабораторная работа №8: Кастомная валидация форм через RegExp
     // ==========================================================================
+    const valForm = document.querySelector('#custom-val-form');
+    const emailInput = document.querySelector('#val-email');
+    const passwordInput = document.querySelector('#val-password');
+    const phoneInput = document.querySelector('#val-phone');
 
-    // Шаг 2: Поиск ключевых интерактивных узлов через document.querySelector()
+    // Шаг 2: Строгие маски регулярных выражений (RegExp)
+    const patterns = {
+        // Проверка e-mail, наличия @ и домена второго уровня
+        email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        
+        // Мин. 8 символов, заглавная буква, цифра, спецсимвол
+        password: /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/,
+        
+        // Международный формат телефона (+7..., +380..., и т.д.)
+        phone: /^\+?[1-9]\d{1,14}$/
+    };
+
+    // Сообщения об ошибках
+    const errorMessages = {
+        email: "Введите корректный E-mail (например, user@domain.com)",
+        password: "Пароль должен содержать мин. 8 символов, 1 заглавную букву, 1 цифру и 1 спецсимвол",
+        phone: "Введите телефон в международном формате (например, +77071234567)"
+    };
+
+    // Шаг 3: Алгоритм очистки прошлых ошибок из DOM
+    function clearErrors() {
+        document.querySelectorAll('.error-message').forEach(el => el.remove());
+        document.querySelectorAll('.input-error').forEach(input => input.classList.remove('input-error'));
+    }
+
+    // Шаг 5: Точечная вставка ошибки под инпутом
+    function showError(inputElement, message) {
+        inputElement.classList.add('input-error');
+        
+        const errorNode = document.createElement('span');
+        errorNode.className = 'error-message';
+        errorNode.textContent = message;
+
+        // Вставка под поля ввода
+        inputElement.parentNode.appendChild(errorNode);
+    }
+
+    // Шаг 1 & 4: Перехват submit и условная логика regex.test()
+    if (valForm) {
+        valForm.addEventListener('submit', (event) => {
+            event.preventDefault(); // Блокировка перезагрузки
+            clearErrors(); // Очистка старых ошибок
+
+            let isValid = true;
+
+            // Проверка Email
+            if (!patterns.email.test(emailInput.value.trim())) {
+                showError(emailInput, errorMessages.email);
+                isValid = false;
+            }
+
+            // Проверка Пароля
+            if (!patterns.password.test(passwordInput.value.trim())) {
+                showError(passwordInput, errorMessages.password);
+                isValid = false;
+            }
+
+            // Проверка Телефона (очищаем от пробелов для теста)
+            const cleanPhone = phoneInput.value.replace(/\s+/g, '');
+            if (!patterns.phone.test(cleanPhone)) {
+                showError(phoneInput, errorMessages.phone);
+                isValid = false;
+            }
+
+            // Успешная валидация
+            if (isValid) {
+                alert('Форма успешно прошла валидацию по RegExp! Данные отправлены.');
+                valForm.reset();
+            }
+        });
+    }
+
+    // ==========================================================================
+    // 3. Лабораторная работа №7: To-Do
+    // ==========================================================================
     const todoForm = document.querySelector('#todo-form');
     const todoInput = document.querySelector('#todo-input');
     const todoList = document.querySelector('#todo-list');
 
-    // Базовый начальный массив задач
-    const initialTasks = [
-        "Настроить агенты Wazuh SIEM",
-        "Проверить правила HTML5 валидации",
-        "Оформить отчет по лабораторной работам"
-    ];
-
-    // Шаг 4: Функция создания и добавления узла <li>
     function createAndAddTask(taskText) {
-        // Создание элемента <li>
         const li = document.createElement('li');
         li.className = 'todo-item';
 
-        // Текстовый контейнер
         const span = document.createElement('span');
         span.className = 'todo-text';
-        // Использование БЕЗОПАСНОГО свойства textContent (защита от XSS)
         span.textContent = taskText;
 
-        // Контейнер кнопок действий
         const actionsDiv = document.createElement('div');
         actionsDiv.className = 'todo-actions';
 
@@ -80,46 +143,30 @@ document.addEventListener('DOMContentLoaded', () => {
         li.appendChild(span);
         li.appendChild(actionsDiv);
 
-        // Инжектирование узла в дерево методом prepend() (новые задачи вверху)
         todoList.prepend(li);
     }
 
-    // Загрузка начальных задач
-    initialTasks.forEach(task => createAndAddTask(task));
-
-    // Шаг 3: Слушатель события отправки формы с event.preventDefault()
     if (todoForm) {
-        todoForm.addEventListener('submit', (event) => {
-            // Блокировка стандартной перезагрузки страницы браузером
-            event.preventDefault();
-
+        todoForm.addEventListener('submit', (e) => {
+            e.preventDefault();
             const taskText = todoInput.value.trim();
             if (taskText !== '') {
                 createAndAddTask(taskText);
-                todoInput.value = ''; // Очистка поля ввода
-                todoInput.focus();
+                todoInput.value = '';
             }
         });
     }
 
-    // Шаг 5: ДЕЛЕГИРОВАНИЕ СОБЫТИЙ на общем родительском контейнере <ul>
     if (todoList) {
-        todoList.addEventListener('click', (event) => {
-            // Верификация целевой кнопки через event.target.closest()
-            const actionButton = event.target.closest('button[data-action]');
+        todoList.addEventListener('click', (e) => {
+            const actionButton = e.target.closest('button[data-action]');
             if (!actionButton) return;
 
-            // Находим родительский узел задачи <li>
             const item = actionButton.closest('.todo-item');
             const action = actionButton.getAttribute('data-action');
 
-            if (action === 'complete') {
-                // Отметка выполнения / отмена
-                item.classList.toggle('completed');
-            } else if (action === 'delete') {
-                // Динамическое удаление узла из DOM
-                item.remove();
-            }
+            if (action === 'complete') item.classList.toggle('completed');
+            if (action === 'delete') item.remove();
         });
     }
 

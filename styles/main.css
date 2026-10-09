@@ -380,3 +380,21 @@ input[type="text"], input[type="email"], select {
   background-color: #ef4444;
   color: #fff;
 }
+/* ==========================================================================
+   Стили для Валидатора формы (Лабораторная работа №8)
+   ========================================================================== */
+
+/* Шаг 5: Класс визуального отклика для невалидного поля */
+input.input-error {
+  border: 2px solid #ef4444 !important;
+  background-color: rgba(239, 68, 68, 0.05);
+}
+
+/* Шаг 5: Кастомный текстовый узел ошибки */
+.error-message {
+  color: #f87171;
+  font-size: 0.8rem;
+  margin-top: 0.35rem;
+  display: block;
+  font-weight: 500;
+}

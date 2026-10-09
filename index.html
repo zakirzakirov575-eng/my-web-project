@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard SOC & To-Do App — Лабораторная №7</title>
+    <title>Dashboard SOC & Form Validator — Лабораторная №8</title>
     <link rel="stylesheet" href="styles/main.css">
-    
-    <!-- Шаг 1: Подключение скрипта с атрибутом defer для предотвращения блокировки HTML-парсинга -->
     <script src="js/app.js" defer></script>
 </head>
 <body>
@@ -16,9 +14,7 @@
         <!-- Шапка -->
         <header class="app-header">
             <div class="brand">
-                <button type="button" class="menu-toggle" id="menu-toggle" aria-label="Открыть меню">
-                    ☰
-                </button>
+                <button type="button" class="menu-toggle" id="menu-toggle" aria-label="Открыть меню">☰</button>
                 <img src="https://via.placeholder.com/100" alt="Аватар профиля Закира" class="avatar">
                 <div>
                     <h1>Закир</h1>
@@ -30,47 +26,68 @@
             </div>
         </header>
 
-        <!-- Боковое меню -->
+        <!-- Навигационное меню -->
         <aside class="app-sidebar" id="app-sidebar">
             <nav class="sidebar-nav">
                 <ul>
-                    <li><a href="#" data-tab="todo" class="nav-link active">✅ Задачи (To-Do)</a></li>
+                    <li><a href="#" data-tab="contact" class="nav-link active">📝 Валидация формы (Лаба 8)</a></li>
+                    <li><a href="#" data-tab="todo" class="nav-link">✅ Задачи (To-Do)</a></li>
                     <li><a href="#" data-tab="dashboard" class="nav-link">📊 Дашборд</a></li>
                     <li><a href="#" data-tab="profile" class="nav-link">👤 Резюме</a></li>
-                    <li><a href="#" data-tab="contact" class="nav-link">📝 Форма связи</a></li>
                 </ul>
             </nav>
         </aside>
 
-        <!-- Основная область -->
+        <!-- Основной контент -->
         <main class="app-main">
             
-            <!-- Шаг 2 & 4: Раздел To-Do приложения -->
-            <section id="todo" class="tab-content active">
+            <!-- Шаг 1: Форма регистрации / валидации (Лаба 8) -->
+            <section id="contact" class="tab-content active">
                 <div class="section-header">
-                    <h2>Интерактивный To-Do Менеджер</h2>
-                    <p>Динамическое управление задачами с помощью чистого JS и DOM-манипуляций</p>
+                    <h2>Кастомный валидатор формы (RegExp)</h2>
+                    <p>Проверка данных на стороне клиента с динамическим выводом ошибок в DOM</p>
                 </div>
 
+                <form id="custom-val-form" class="custom-form" novalidate>
+                    <fieldset>
+                        <legend>Учетные данные</legend>
+                        
+                        <!-- Email -->
+                        <div class="form-group">
+                            <label for="val-email">Email адрес:</label>
+                            <input type="email" id="val-email" placeholder="example@domain.com">
+                        </div>
+
+                        <!-- Пароль -->
+                        <div class="form-group">
+                            <label for="val-password">Пароль:</label>
+                            <input type="password" id="val-password" placeholder="Заглавная, цифра, спецсимвол, мин. 8 знаков">
+                        </div>
+
+                        <!-- Телефон -->
+                        <div class="form-group">
+                            <label for="val-phone">Номер телефона (международный):</label>
+                            <input type="tel" id="val-phone" placeholder="+7 707 123 4567 или +77071234567">
+                        </div>
+                    </fieldset>
+
+                    <button type="submit" class="btn btn-submit">Зарегистрироваться</button>
+                </form>
+            </section>
+
+            <!-- Раздел To-Do (Лаба 7) -->
+            <section id="todo" class="tab-content">
+                <div class="section-header">
+                    <h2>Интерактивный To-Do Менеджер</h2>
+                </div>
                 <div class="todo-card">
-                    <!-- Форма добавления задачи -->
                     <form id="todo-form" class="todo-form">
                         <div class="todo-input-group">
-                            <input 
-                                type="text" 
-                                id="todo-input" 
-                                class="todo-input" 
-                                placeholder="Введите новую задачу (например, Настроить правила Wazuh)..." 
-                                required
-                            >
+                            <input type="text" id="todo-input" class="todo-input" placeholder="Введите задачу...">
                             <button type="submit" class="btn btn-primary">Добавить</button>
                         </div>
                     </form>
-
-                    <!-- Шаг 2 & 5: Родительский контейнер списка tasks-list -->
-                    <ul id="todo-list" class="todo-list">
-                        <!-- Динамические элементы <li> будут вставляться сюда -->
-                    </ul>
+                    <ul id="todo-list" class="todo-list"></ul>
                 </div>
             </section>
 
@@ -85,21 +102,10 @@
                             <h3>Wazuh SIEM</h3>
                             <span class="badge badge-success">Active</span>
                         </div>
-                        <p class="card-body">Сбор и корреляция событий безопасности в режиме реального времени.</p>
+                        <p class="card-body">Сбор и корреляция событий безопасности.</p>
                         <div class="card-footer">
                             <span>Загрузка: 18%</span>
-                            <button type="button" class="btn btn-primary" onclick="showDetails('Wazuh SIEM', 'Все агенты подключены. Сбоев не зафиксировано.')">Детали</button>
-                        </div>
-                    </article>
-                    <article class="card">
-                        <div class="card-header">
-                            <h3>Network Traffic</h3>
-                            <span class="badge badge-success">Normal</span>
-                        </div>
-                        <p class="card-body">Анализ сетевых пакетов, фильтрация аномалий и мониторинг портов.</p>
-                        <div class="card-footer">
-                            <span>Скорость: 1.2 Gbps</span>
-                            <button type="button" class="btn btn-primary" onclick="showDetails('Network Traffic', 'Пропускаемость в норме, подозрительный трафик отсутствует.')">Детали</button>
+                            <button type="button" class="btn btn-primary" onclick="showDetails('Wazuh SIEM', 'Все агенты подключены.')">Детали</button>
                         </div>
                     </article>
                 </div>
@@ -111,32 +117,14 @@
                     <h2>Информация о разработчике</h2>
                 </div>
                 <article class="profile-card">
-                    <h3>Краткая сводка</h3>
                     <p>Студент КазНУ. Специализируюсь на сетевой безопасности и веб-разработке.</p>
                 </article>
-            </section>
-
-            <!-- Раздел Форма -->
-            <section id="contact" class="tab-content">
-                <div class="section-header">
-                    <h2>Форма обратной связи</h2>
-                </div>
-                <form class="custom-form" onsubmit="event.preventDefault(); alert('Форма отправлена!');">
-                    <fieldset>
-                        <legend>Личные данные</legend>
-                        <div class="form-group">
-                            <label for="username">Имя пользователя:</label>
-                            <input type="text" id="username" required minlength="3">
-                        </div>
-                    </fieldset>
-                    <button type="submit" class="btn btn-submit">Отправить</button>
-                </form>
             </section>
 
         </main>
 
         <footer class="app-footer">
-            <p>&copy; 2026 Закир. Лабораторная работа №7.</p>
+            <p>&copy; 2026 Закир. Лабораторная работа №8.</p>
         </footer>
 
     </div>
