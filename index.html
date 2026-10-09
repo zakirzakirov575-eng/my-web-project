@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Закир — Portfolio & Security Operations Dashboard</title>
+    <title>Dashboard SOC — Адаптивная версия (Лаба 6)</title>
     <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
 
-    <!-- Макроконтейнер (Лаба 5: CSS Grid) -->
     <div class="app-container">
         
-        <!-- Шапка (Лаба 2: Header & Img) -->
+        <!-- Шапка -->
         <header class="app-header">
             <div class="brand">
+                <!-- Гамбургер-кнопка для мобильных экранов -->
+                <button type="button" class="menu-toggle" id="menu-toggle" aria-label="Открыть меню">
+                    ☰
+                </button>
                 <img src="https://via.placeholder.com/100" alt="Аватар профиля Закира" class="avatar">
                 <div>
                     <h1>Закир</h1>
@@ -21,29 +24,28 @@
                 </div>
             </div>
             <div class="header-status">
-                <span class="status-indicator"></span> System Operational
+                <span class="status-indicator"></span> Operational
             </div>
         </header>
 
-        <!-- Навигация (Лаба 2: Nav) -->
-        <aside class="app-sidebar">
+        <!-- Боковое меню -->
+        <aside class="app-sidebar" id="app-sidebar">
             <nav class="sidebar-nav">
                 <ul>
                     <li><a href="#" data-tab="dashboard" class="nav-link active">📊 Дашборд</a></li>
-                    <li><a href="#" data-tab="profile" class="nav-link">👤 Резюме / О себе</a></li>
+                    <li><a href="#" data-tab="profile" class="nav-link">👤 Резюме</a></li>
                     <li><a href="#" data-tab="contact" class="nav-link">📝 Форма связи</a></li>
                 </ul>
             </nav>
         </aside>
 
-        <!-- Основная область (Лаба 2: Main, Section, Article) -->
+        <!-- Основная область -->
         <main class="app-main">
             
-            <!-- Вкладка 1: Дашборд (Лаба 5: Flex/Grid Cards) -->
             <section id="dashboard" class="tab-content active">
                 <div class="section-header">
                     <h2>Центр мониторинга и сервисов</h2>
-                    <p>Адаптивная сетка карточек состояния системы</p>
+                    <p>Адаптивный интерфейс под любые устройства</p>
                 </div>
 
                 <div class="cards-grid">
@@ -85,7 +87,6 @@
                 </div>
             </section>
 
-            <!-- Вкладка 2: Резюме -->
             <section id="profile" class="tab-content">
                 <div class="section-header">
                     <h2>Информация о разработчике</h2>
@@ -103,13 +104,12 @@
                 </article>
             </section>
 
-            <!-- Вкладка 3: Форма (Лаба 3: Валидация, Fieldset, Radio, Checkbox, Select) -->
             <section id="contact" class="tab-content">
                 <div class="section-header">
-                    <h2>Форма обратной связи и регистрации</h2>
+                    <h2>Форма обратной связи</h2>
                 </div>
 
-                <form class="custom-form" onsubmit="event.preventDefault(); alert('Форма успешно отправлена!');">
+                <form class="custom-form" onsubmit="event.preventDefault(); alert('Форма отправлена!');">
                     <fieldset>
                         <legend>Личные данные</legend>
                         <div class="form-group">
@@ -123,7 +123,7 @@
                     </fieldset>
 
                     <fieldset>
-                        <legend>Параметры и предпочтения</legend>
+                        <legend>Параметры</legend>
                         <div class="form-group">
                             <label for="role">Роль в системе:</label>
                             <select id="role" required>
@@ -132,13 +132,6 @@
                                 <option value="developer">Web Developer</option>
                                 <option value="student">Студент</option>
                             </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Уведомления:</label>
-                            <div class="radio-group">
-                                <label><input type="radio" name="notify" value="email" checked> Email</label>
-                                <label><input type="radio" name="notify" value="telegram"> Telegram</label>
-                            </div>
                         </div>
                         <div class="form-group">
                             <label><input type="checkbox" required> Я согласен на обработку данных</label>
@@ -151,14 +144,13 @@
 
         </main>
 
-        <!-- Футер (Лаба 2: Footer) -->
         <footer class="app-footer">
-            <p>&copy; 2026 Закир. Разработано в рамках лабораторных работ №1–5.</p>
+            <p>&copy; 2026 Закир. Лабораторная работа №6.</p>
         </footer>
 
     </div>
 
-    <!-- Модальное окно (Лаба 5 / JS) -->
+    <!-- Модальное окно -->
     <div id="modal" class="modal">
         <div class="modal-card">
             <span class="modal-close" onclick="closeModal()">&times;</span>

@@ -1,6 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Логика переключения вкладок
+    // Гамбургер-меню для мобильной версии
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebar = document.getElementById('app-sidebar');
+
+    if (menuToggle && sidebar) {
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+    }
+
+    // Переключение вкладок
     const navLinks = document.querySelectorAll('.nav-link');
     const tabContents = document.querySelectorAll('.tab-content');
 
@@ -8,20 +18,23 @@ document.addEventListener('DOMContentLoaded', () => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
 
-            // Удаляем активные классы
             navLinks.forEach(item => item.classList.remove('active'));
             tabContents.forEach(tab => tab.classList.remove('active'));
 
-            // Активируем нужную вкладку
             link.classList.add('active');
             const targetTab = link.getAttribute('data-tab');
             document.getElementById(targetTab).classList.add('active');
+
+            // Автоматически закрываем меню на мобилках после выбора вкладки
+            if (window.innerWidth < 768) {
+                sidebar.classList.remove('active');
+            }
         });
     });
 
 });
 
-// Функции для модального окна
+// Модальное окно
 function showDetails(title, description) {
     document.getElementById('modal-title').textContent = title;
     document.getElementById('modal-desc').textContent = description;
