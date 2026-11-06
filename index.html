@@ -34,6 +34,7 @@
                     <li><a href="#" data-tab="todo" class="nav-link">✅ Задачи To-Do (Лаба 7)</a></li>
                     <li><a href="#" data-tab="dashboard" class="nav-link">📊 Дашборд SOC (Лаба 5-6)</a></li>
                     <li><a href="#" data-tab="profile" class="nav-link">👤 Резюме / О себе</a></li>
+                    <li><a href="#" data-tab="api-widget" class="nav-link">🌤️ API Виджет (Лаба 9)</a></li>
                 </ul>
             </nav>
         </aside>
@@ -150,6 +151,31 @@
                         <li>Network Security / Wazuh SIEM / Git</li>
                     </ul>
                 </article>
+            </section>
+            <!-- Страница 5: API Виджет (Лаба 9) -->
+            <section id="api-widget" class="tab-content">
+                <div class="section-header">
+                    <h2>Асинхронный веб-виджет (Fetch API)</h2>
+                    <p>Запрос данных из публичного API в реальном времени</p>
+                </div>
+
+                <div class="widget-card">
+                    <div class="widget-controls">
+                        <input type="text" id="city-input" class="todo-input" value="Almaty" placeholder="Введите город...">
+                        <button type="button" id="fetch-btn" class="btn btn-primary">Получить погоду</button>
+                    </div>
+
+                    <!-- Индикатор загрузки (Spinner) -->
+                    <div id="loading-spinner" class="spinner-container" style="display: none;">
+                        <div class="spinner"></div>
+                        <p>Загрузка данных с сервера...</p>
+                    </div>
+
+                    <!-- Контейнер для вывода данных -->
+                    <div id="widget-result" class="widget-result">
+                        <p class="text-muted">Нажмите кнопку, чтобы загрузить данные погоды...</p>
+                    </div>
+                </div>
             </section>
 
         </main>

@@ -1,4 +1,72 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // ==========================================================================
+    // 5. Лабораторная работа №9: Асинхронный Fetch API Виджет
+    // ==========================================================================
+    const fetchBtn = document.querySelector('#fetch-btn');
+    const cityInput = document.querySelector('#city-input');
+    const spinner = document.querySelector('#loading-spinner');
+    const widgetResult = document.querySelector('#widget-result');
+
+    // Асинхронная функция запроса данных (async/await + try/catch)
+    async function fetchWeatherData(city) {
+        const url = `https://wttr.in/${encodeURIComponent(city)}?format=j1`;
+
+        // Шаг 5: Показываем индикатор загрузки (Spinner), очищаем результат
+        spinner.style.display = 'flex';
+        widgetResult.innerHTML = '';
+
+        try {
+            // Шаг 3: Отправка сетевого запроса методом fetch() с await
+            const response = await fetch(url);
+
+            // Шаг 4: Проверка статуса ответа сервера (например, 404 или 500)
+            if (!response.ok) {
+                throw new Error(`Ошибка сервера: статус ${response.status}`);
+            }
+
+            // Шаг 5: Десериализация JSON-строки методом response.json()
+            const data = await response.json();
+
+            // Извлекаем нужные данные из структуры wttr.in API
+            const currentCondition = data.current_condition[0];
+            const tempC = currentCondition.temp_C;
+            const desc = currentCondition.weatherDesc[0].value;
+            const humidity = currentCondition.humidity;
+            const windSpeed = currentCondition.windspeedKmph;
+
+            // Шаг 5: Динамическая инжекция свойств в дерево DOM
+            widgetResult.innerHTML = `
+                <h3>Погода в г. ${city}</h3>
+                <p><strong>🌡 Температура:</strong> ${tempC} °C</p>
+                <p><strong>☁️ Описание:</strong> ${desc}</p>
+                <p><strong>💧 Влажность:</strong> ${humidity}%</p>
+                <p><strong>💨 Скорость ветра:</strong> ${windSpeed} км/ч</p>
+            `;
+
+        } catch (error) {
+            // Шаг 4: Централизованный перехват исключений сетевых сбоев
+            console.error("Ошибка запроса:", error);
+            widgetResult.innerHTML = `
+                <p style="color: #f87171;"><strong>⚠️ Не удалось загрузить данные.</strong></p>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">Причина: ${error.message}. Проверьте подключение к сети или название города.</p>
+            `;
+        } finally {
+            // Скрываем спиннер в любом случае (успех или ошибка)
+            spinner.style.display = 'none';
+        }
+    }
+
+    if (fetchBtn && cityInput) {
+        fetchBtn.addEventListener('click', () => {
+            const cityName = cityInput.value.trim();
+            if (cityName) {
+                fetchWeatherData(cityName);
+            }
+        });
+
+        // Автоматическая загрузка погоды для Алматы при первом открытии вкладки
+        fetchWeatherData("Almaty");
+    }
 
     // ==========================================================================
     // 1. Мобильное меню (Гамбургер)
